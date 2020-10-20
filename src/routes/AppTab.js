@@ -1,16 +1,16 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { FontAwesome } from '@expo/vector-icons'; 
+
 
 import AppList from '../screens/AppList';
 import AppForm from '../screens/AppForm';
+import AppAnswer from '../screens/AppAnswer';
  
 const {Navigator, Screen} = createBottomTabNavigator();
- 
+
 function AppTab(){
     return (
-        <NavigationContainer>
             <Navigator
                 tabBarOptions={{
                     style: {
@@ -38,15 +38,14 @@ function AppTab(){
                     tabBarLabel: "Questionários"
                     }}
                 />
-                
                 <Screen name="AppForm" component={AppForm} options={{
                     tabBarLabel: "Adicionar"
                     }}
                 />
 
             </Navigator>
-        </NavigationContainer>
     );
 }
+
  
 export default AppTab;

@@ -9,7 +9,12 @@ export default function AppItem(props){
 
     async function handleEditPress(){ 
         const item = await Database.getItem(props.id);
-        props.navigation.navigate("AppForm", item);
+        props.navigation.navigate("AppInspect", item);
+    }
+
+    async function handleAnswerPress(){ 
+        const item = await Database.getItem(props.id);
+        props.navigation.navigate("AppAnswer", item);
     }
 
     function handleDeletePress(){ 
@@ -39,8 +44,11 @@ export default function AppItem(props){
             <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress} > 
             <Feather name="trash" size={16} color="white" />
             </TouchableOpacity> 
-            <TouchableOpacity style={styles.editButton} onPress={handleEditPress}> 
-                <Text style={styles.buttonText}>Ver e Atualizar</Text> 
+            <TouchableOpacity style={styles.inspectButton} onPress={handleEditPress}> 
+            <Feather name="eye" size={16} color="white" />            
+            </TouchableOpacity> 
+            <TouchableOpacity style={styles.editButton} onPress={handleAnswerPress}> 
+                <Text style={styles.buttonText}>Responder</Text> 
             </TouchableOpacity> 
           </View>
         </View>
@@ -66,7 +74,19 @@ const styles = StyleSheet.create({
     editButton: {
         marginLeft: 10,
         height: 40,
-        backgroundColor: 'blue',
+        backgroundColor: '#4B0082',
+        borderRadius: 10,
+        padding: 10,
+        fontSize: 12,
+        elevation: 10,
+        shadowOpacity: 10,
+        shadowColor: '#ccc',
+        alignItems: 'center'
+    },
+    inspectButton: {
+        marginLeft: 10,
+        height: 40,
+        backgroundColor: '#A020F0',
         borderRadius: 10,
         padding: 10,
         fontSize: 12,

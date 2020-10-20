@@ -3,7 +3,8 @@ import { AppLoading } from 'expo';
 import { Archivo_400Regular, Archivo_700Bold, useFonts } from '@expo-google-fonts/archivo';
 import React from 'react';
  
-import AppTab from './src/routes/AppTab.js';
+import AppTab from './src/routes/AppTab';
+import AppStack from './src/routes/AppStack';
  
 export default function App() {
   let[fontsLoaded] = useFonts({
@@ -17,7 +18,7 @@ export default function App() {
 
   return (
     <>
-      <AppTab />
+      <AppStack />
       <StatusBar style="light" />
     </>
   );

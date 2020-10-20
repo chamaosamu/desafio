@@ -3,12 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-import DatePicker from 'react-native-datepicker';
-
-import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-community/async-storage';
-
 import Database from '../database/Database';
 
 
@@ -18,27 +13,26 @@ export default function AppForm({ route, navigation}) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [titulo, setTitulo] = useState(null); 
   const [usuario, setUsuario] = useState(null);
-  const [descricao, setDescricao] = useState(null);
-  const [dateAtualizacao, setAtualizacao] = useState(new Date())
+  const [dateAtualizacao, setAtualizacao] = useState(null)
+  
+  
+
 
   useEffect(() => {
   
     if(!route.params) return;
     setTitulo(route.params.titulo);
     setUsuario(route.params.usuario);
-    setDescricao(route.params.descricao);
     setAtualizacao(route.params.dateAtualizacao)
-
   }, [route])
   
 
 function handleTitleChange(titulo){ setTitulo(titulo); } 
 function handleUserChange(usuario){ setUsuario(usuario); }
-function handleDescriptionChange(descricao){ setDescricao(descricao); }
 function handleDateAtualizacaoChange(dateAtualizacao){setAtualizacao(dateAtualizacao); }
 
 async function handleButtonPress(){ 
-  const listItem = {titulo, usuario, descricao, dateAtualizacao};
+  const listItem = {titulo, usuario, dateAtualizacao};
   Database.saveItem(listItem, id)
       .then(response => navigation.navigate("AppList", listItem));
       navigation.reset({
@@ -64,7 +58,6 @@ async function handleButtonPress(){
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    
   }
 
     return (
@@ -72,61 +65,39 @@ async function handleButtonPress(){
       <View style={styles.container}>
         <Text style={styles.title}>Adicionar questionário</Text>
         <View style={styles.inputContainer}> 
+
           <TextInput 
             style={styles.input} 
             onChangeText={handleTitleChange} 
             placeholder="Título"
             clearButtonMode="always"
             value={titulo} /> 
+
           <TextInput 
             style={styles.input}  
             onChangeText={handleUserChange} 
             placeholder="Usuário" 
             clearButtonMode="always" 
             value={usuario}/>
-            
-            <Text
-            style={styles.textDate}>
-              Data da última atualização:
-            </Text>
-
-            <DatePicker
-              format="DD/MM/YYYY"
-              style={styles.dateComponent}
-              date={dateAtualizacao}
-              onDateChange={handleDateAtualizacaoChange}
+        
+            <TextInput
+              style={styles.input}  
+              onChangeText={handleDateAtualizacaoChange} 
+              placeholder="Data" 
+              clearButtonMode="always" 
               value={dateAtualizacao}
-            />
+              />
             
-            <Text
-            style={styles.texQuest}>
-                Responda o questionário!
-            </Text>
 
-            <TextInput 
-            style={styles.inputDesc} 
-            onChangeText={handleDescriptionChange} 
-            placeholder="Descrição"
-            multiline
-            numberOfLines={3}
-            clearButtonMode="always" 
-            value={descricao} /> 
-
-            <Text style={styles.inputLoc}>Localização atual: </Text>
-            <Text style={styles.inputCoord}> {text} </Text>
-      
-  
-     
           <TouchableOpacity style={styles.button} onPress={handleButtonPress}> 
             <AntDesign name="save" size={16} color="white" />
-            <Text style={styles.buttonText}>Salvar</Text> 
+            <Text style={styles.buttonText}>Criar</Text> 
           </TouchableOpacity> 
         </View>
         <StatusBar style="light" />
       </View>
     );
   }
-  
 
   const styles = StyleSheet.create({
     container: {
